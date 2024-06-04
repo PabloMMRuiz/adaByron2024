@@ -12,6 +12,9 @@ def solve(nMax: int, ls:list):
     solveRes(nMax, ls, resSet, 0)
     print(len(resSet))
 
+
+#Como añadir memoria, que estoy vago como pa escribirlo: quitamos el ls+[0] y añadimos siempre a resSet. Metemos tuplas con el 
+#numero y paso de nMax. Si ya estaba esa tupla, cortamos la rama. Al final casi solo se exploran tantas ramas como soluciones hay, eficiencia maxima!!!
 def solveRes(nMax: int, ls: list, resSet: set, currSum: int):
     if nMax == 1:
         for e in ls:
