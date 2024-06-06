@@ -7,33 +7,31 @@ def lee_numeros():
     return list(map(int, input().split()))
 
 def solve(n:int, k:int, serpientes: list, escaleras:list):
-#Vamos a utilizar una implementacion de disktra rarilla: voy a intentar avanzar siempre todo lo que pueda hacia delante
-#Que tampoco tiene mucho sentido avanzar menos
     meta = n*n
-    currPos = 1
-    print(solveRes(meta,k, currPos, 0, serpientes, escaleras))
-#Pues si que tiene sentido avanzar menos, tocate un pie. Putas escaleras...
-def solveRes(meta: int, k:int, currPos: int, numTiradas: int, serpientes: list, escaleras: list):
-    if(meta-currPos <= k):
-        return numTiradas +1
-    else:
-        bestPos = currPos
-        for e in range(1,k+1):
-            alcanzada = currPos+e
-            for sStart, _sEnd in serpientes:
+    currPos = (1, 0) #posicion, numero de tiradas
+    visited = set()
+    pile = [currPos]
+    while len(pile)>0:
+        currPos = pile.pop(0)
+        for tirada in range(1, k+1):
+            alcanzada = currPos[0]+tirada
+            if alcanzada >= meta:
+                print(currPos[1]+1)
+                return
+            for sStart, sEnd in serpientes: #Hay formas mas eficientes de hacer esto
                 if sStart == alcanzada:
-                    alcanzada = -10
+                    alcanzada = sEnd
                     break
             for eStart, eEnd in escaleras:
                 if eStart == alcanzada:
                     alcanzada = eEnd
                     break
-            if alcanzada > bestPos:
-                bestPos= alcanzada
-                if bestPos >= meta:
-                    return numTiradas+1
-        print(bestPos)
-        return solveRes(meta, k, bestPos, numTiradas+1, serpientes, escaleras)
+            if alcanzada not in visited:
+                pile.append((alcanzada, currPos[1]+1))
+                visited.add(alcanzada)
+            
+
+
 def main():
     info = lee_numeros()
     n = info[0]
