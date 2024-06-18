@@ -12,9 +12,6 @@ def solve(bus:list):
     inicio = n*(n+1) //2 +1 #el primer lugar lo ocupa el 0, que no es natural, de ahi el +1
     print(inicio+pisoArriba)
 
-
-
-
 def main():
     n = lee_numero()
     while n != 0:
